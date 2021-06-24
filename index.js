@@ -11,14 +11,16 @@ app.use(bodyParser.json());
 
 
 const MongoClient= require('mongodb').MongoClient;
-const password="1234567@jobDatabase";
-const uri = "mongodb+srv://jobDatabase:1234567@jobDatabase@cluster0.n1i4v.mongodb.net/jobDb?retryWrites=true&w=majority";
+
+const uri = "mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.n1i4v.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+require('dotenv').config
 
 
 
 app.get('/',(req,res)=>{
-    res.send ("Hello I am working")
+    res.send ("Hello from Db , I am working")
 })
 
 
@@ -47,4 +49,4 @@ client.connect(err => {
 });
 
 
-app.listen(5000);
+app.listen(process.env.PORT || port);
